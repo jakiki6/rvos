@@ -3,6 +3,9 @@
 .section .text
 .global _start
 _start:
+	# disable interrupts
+	csrw mie, zero
+
 	# wait for IPI if we're not the right hart
 	csrr t0, mhartid
 	bnez t0, wait_for_jmp
@@ -23,10 +26,16 @@ zero_bss_loop:
 setup_stack:
 	la sp, __boot_stack
 
+	# argc = 0, argv = 0
+        li a0, 0
+        li a1, 0
+.extern boot_kernel
+	j boot_kernel
+
 wait_for_jmp:
 	csrr t0, mhartid
-	li t1, 2
-        bltu t1, t0, halt
+	li t1, 8
+        bgeu t0, t1, halt
 
 	addi t0, t0, -1
 	slli t0, t0, 3
@@ -36,7 +45,11 @@ wait_for_jmp:
 .wait:	ld t0, (a0)
 	bne t0, zero, .wait
 
-	jr a0
+	# argc = 0, argv = 0
+	mv a2, a0
+	li a0, 0
+	li a1, 0
+	jr a2
 
 halt:
 	wfi

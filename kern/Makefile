@@ -16,7 +16,7 @@ OBJ    := $(CFILES:.c=.o) $(ASMFILES:.S=.o)
 all: run
 
 run: $(TARGET)
-	qemu-system-riscv64 -kernel $<
+	qemu-system-riscv64 -machine virt -kernel $<
 
 $(TARGET): $(OBJ)
 	$(LD) -Tlinker.ld -o $@ $^
@@ -28,6 +28,6 @@ $(TARGET): $(OBJ)
 	$(AS) -o $@ $<
 
 clean:
-	rm $(TARGET) $(OBJ) 2> /dev/null || true
+	rm $(TARGET) *.o 2> /dev/null || true
 
 .PHONY: all clean
