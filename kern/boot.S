@@ -3,6 +3,11 @@
 .section .text
 .global _start
 _start:
+.option push
+.option norelax
+	la gp, __data_start
+.option pop
+
 	# wait for IPI if we're not the right hart
 	csrr t0, mhartid
 	bnez t0, halt

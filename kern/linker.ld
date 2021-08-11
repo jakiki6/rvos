@@ -3,7 +3,7 @@ ENTRY(_start)
 
 SECTIONS
 {
-    . = 0x80000000 + 2M;
+    . = 0x80000000;
     __kernel_start = .;
 
     /* Then let's place all the other traditional executable sections afterwards. */
