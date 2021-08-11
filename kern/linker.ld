@@ -9,6 +9,7 @@ SECTIONS
     /* Then let's place all the other traditional executable sections afterwards. */
     __text_start = .;
     .text ALIGN(4K) : {
+	*(.boot)
         *(.text*)
     }
     __text_end = .;

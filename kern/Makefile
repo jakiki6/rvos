@@ -16,7 +16,7 @@ OBJ    := $(CFILES:.c=.o) $(ASMFILES:.S=.o)
 all: run
 
 run: $(TARGET)
-	qemu-system-riscv64 -cpu rv64 -d guest_errors,unimp -D log.txt -bios none -kernel $<
+	qemu-system-riscv64 -d guest_errors,unimp -D log.txt -machine sifive_u -bios none -kernel $<
 
 $(TARGET): $(OBJ)
 	$(LD) -Tlinker.ld -o $@ $^

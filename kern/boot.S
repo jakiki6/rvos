@@ -1,6 +1,6 @@
 .option norvc
 
-.section .text
+.section .boot
 .global _start
 _start:
 .option push
